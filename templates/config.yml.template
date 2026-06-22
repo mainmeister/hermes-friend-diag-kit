@@ -1,0 +1,19 @@
+# Friend-Diagnostic Cloudflare Tunnel config
+#
+# This file goes on the USB stick alongside cloudflared.exe.
+# When the friend runs connect.bat, cloudflared reads this file, opens an
+# outbound QUIC connection to Cloudflare's edge, registers the tunnel, and
+# routes traffic for {{HOSTNAME}} to localhost:22 (their sshd).
+#
+# The credentials file (friend-diag-credentials.json) is what authorises this
+# tunnel under the user's Cloudflare account. Treat it like a password —
+# anyone who has it can run the tunnel from anywhere.
+
+tunnel: {{TUNNEL_ID}}
+credentials-file: ./friend-diag-credentials.json
+protocol: http2
+
+ingress:
+  - hostname: {{HOSTNAME}}
+    service: ssh://localhost:22
+  - service: http_status:404
