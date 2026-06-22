@@ -1,0 +1,39 @@
+@echo off
+title Friend Diagnostics - Cloudflare Tunnel ({{TUNNEL_NAME}})
+color 0A
+
+echo.
+echo ============================================================
+echo   Friend Diagnostics - Cloudflare Named Tunnel
+echo ============================================================
+echo.
+echo This opens a secure tunnel from THIS PC to the internet, so
+echo your friend can SSH into your Windows shell to help diagnose
+echo problems remotely.
+echo.
+echo First-time setup: you must have run setup-openssh.ps1 once as
+echo Administrator. If you haven't, do that first.
+echo.
+echo ------------------------------------------------------------
+echo.
+echo Starting cloudflared tunnel ({{TUNNEL_NAME}})...
+echo.
+echo When you see "Registered tunnel connection" messages below,
+echo the tunnel is up. Tell your friend:
+echo.
+echo     "Tunnel is up, you can SSH in now."
+echo.
+echo Their command will be:
+echo     ssh YOUR_WINDOWS_USERNAME@{{HOSTNAME}}
+echo.
+echo LEAVE THIS WINDOW OPEN while your friend is working.
+echo Close the window (or run stop.bat) to disconnect.
+echo.
+echo ------------------------------------------------------------
+echo.
+
+cloudflared.exe --no-prechecks tunnel --config "%~dp0config.yml" run {{TUNNEL_NAME}}
+
+echo.
+echo Tunnel closed.
+pause
