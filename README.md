@@ -15,6 +15,8 @@ What's on the USB stick:
   `config.yml`                       Tunnel configuration (routes SSH to localhost:22)
   `friend-diag-credentials.json`     Tunnel credentials (KEEP THIS SECRET — it
                                    authorises anyone holding it to run the tunnel)
+  `install.bat`                      Wrapper to bypass PowerShell execution policies
+                                   (Right-click -> Run as Administrator)
   `setup-openssh.ps1`                Run once as Administrator to enable OpenSSH Server
                                    (also installs the operator's public key)
   `connect.bat`                      Double-click to start the tunnel
@@ -23,8 +25,8 @@ What's on the USB stick:
 
 ONE-TIME SETUP (you only do this once per PC)
 ----------------------------------------------
-1. Right-click "setup-openssh.ps1"
-2. Choose "Run with PowerShell as Administrator"
+1. Right-click "install.bat" (or "setup-openssh.ps1" if install.bat is missing)
+2. Choose "Run as Administrator"
 3. Click "Yes" on the UAC prompt
 4. Wait for "Done!" (about 30 seconds)
 5. Note the Windows username it prints at the end
@@ -70,9 +72,9 @@ TROUBLESHOOTING
     Cloudflare but SmartScreen warns on first run.
 
 - "Execution of scripts is disabled on this system":
-    Open PowerShell as Administrator and run:
-        `Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass`
-    Then re-run `setup-openssh.ps1`.
+    Windows is blocking `.ps1` files. Right-click `install.bat` and select
+    "Run as Administrator". This batch script automatically bypasses the
+    execution policy to run the setup.
 
 - "failed to fetch configuration" or "tunnel not found":
     The credentials file is missing or wrong. Verify
